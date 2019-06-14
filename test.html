@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<!--<script>-->
+    <!--var xhr = new XMLHttpRequest()-->
+    <!--xhr.open('GET', 'http://127.0.0.1:8887/')-->
+    <!--xhr.send()-->
+<!--</script>-->
+
+<!--jsonp方式允许跨域-->
+<!--<script src="http://127.0.0.1:8887/"></script>-->
+
+<!--使用fetch方式-->
+<script>
+    fetch('http://localhost:8887/', {
+        method: 'PUT', // GET, POST, HEAD 默认允许，其它除外(必须大写)
+        headers: {
+            'X-Test-Cors': '123'
+        }
+    })
+</script>
+
+</html>
