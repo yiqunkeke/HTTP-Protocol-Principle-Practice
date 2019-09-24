@@ -1,0 +1,44 @@
+(a) 请求报文                                                (b) 响应报文
+┌────────────────────────────────────┐                ┌────────────────────────────────┐     
+| GET /test/hi-there.txt HTTP/1.1    │                │  HTTP/1.1 200 OK               |    起始行
+|____________________________________│                ├────────────────────────────────┤
+| Host: github.com                   │                │  Content-type: text/plain      |    首部
+| Connection: keep-alive             │                │  Content-length: 19            |
+| Accept: text/html                  |                |                                |
+|                                    |                ├────────────────────────────────┤
+└────────────────────────────────────┘                │  Hi! I'am a message!           │    主体
+                                                      └────────────────────────────────┘
+
+注意：HTTP的首行并不属于HTTP的headers。
+它的首行和headers是有所区分的。 
+
+首行换行之后，都是HTTP的headers；
+
+HTTP的headers与主体之间，有一个完整的空行，来区分。
+
+(a) 在请求报文中，
+.首行包括：
+    . HTTP的method，就是请求的方法，---用来定义对于资源的操作
+        HTTP的method的很多种，有GET,POST,PUT,DELETE，它们
+        有各自的语义，GET是获取，POST是创建，PUT是修改/更新，DELETE是删除
+        希望按照语义规范实现web服务。
+
+    . 路由
+
+    . HTTP协议版本 
+
+. headers包括：后面具体讲,这节主要讲HTTP的首行
+
+(b)在响应报文中，
+. 首行包括：
+    . HTTP协议版本 
+    . status code ---定义服务器对请求的处理结果
+        . 各区间的code有各自的语义
+        . 好的HTTP服务可以通过code判断结果
+    . status description 
+  
+
+
+
+      
+

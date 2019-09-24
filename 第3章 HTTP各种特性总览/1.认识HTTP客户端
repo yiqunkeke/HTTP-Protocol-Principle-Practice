@@ -1,0 +1,11 @@
+. 最简单的HTTP客户端就是  浏览器
+. 使用git bash里面的curl命令： 
+   curl -v www.baidu.com 
+
+可以看到请求报文首行与头部
+> GET / HTTP/1.1
+> Host: www.baidu.com
+> User-Agent: curl/7.59.0
+> Accept: */*
+
+以及响应报文
