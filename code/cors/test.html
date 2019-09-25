@@ -9,12 +9,21 @@
 <body>
     
 </body>
-<!-- cors1 -->
+<!-- 1. 在服务器端设置头部信息允许跨域-->
+<!-- 这里8888服务，向8887服务发送了一个ajax请求，这个请求就是一个跨域请求 -->
+<!-- 如何允许跨域：需要在服务端设置允许跨域的头部信息 'Access-Control-Allow-Origin' -->
 <!-- <script>
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', 'http://127.0.0.1:8887/')
+  xhr.open('GET', 'http://127.0.0.1:8887/') 
   xhr.send()
 </script> -->
+
+<!-- 2. 使用JSONP跨域 -->
+<!-- 浏览器允许 link、img、script 标签跨域，此时浏览器在解析返回内容时，不会去验证响应头部是否设置了允许跨域 -->
+<!-- <script src="http://127.0.0.1:8887/"></script> -->
+
+<!-- 3. CORS预请求 -->
+<!-- http请求中自定义的头部，在跨域时也是不被允许的，需要在服务端设置响应头部Access-Control-Allow-Headers来允许自定义头部 -->
 <script>
   fetch('http://localhost:8887', {
     method: 'POST',
