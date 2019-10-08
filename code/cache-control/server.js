@@ -15,7 +15,9 @@ http.createServer(function (request, response) {
   if (request.url === '/script.js') {
     response.writeHead(200, {
       'Content-Type': 'text/javascript',
-      'Cache-Control': 'max-age=20, public'  
+      'Cache-Control': 'max-age=2000000, no-cache',
+      'Last-Modified': '123', // 当Cache-Control中使用了 no-cache，下次再对资源发送请求时依然需要到服务器端进行“资源验证”，否则不能使用缓存
+      'Etag': '777'  
       // 当我们在响应中添加了'Cache-Control:max-age=20'这个头之后，我们再次刷新时，在调试Network里，
       // 1. script.js的Size变成了memory cache
       // 2. 而且 Time 变成了 0
@@ -24,7 +26,7 @@ http.createServer(function (request, response) {
 
       // 这就是Cache-Control的作用：让我们在请求资源的时候，可以从缓存中去读。
     })
-    response.end('console.log("script loaded")')
+    response.end('console.log("script loaded twice")')
 
     // 3.当我们服务端返回的内容有改变时，
     // 因为它请求的url没有发生变化，所以它依然只会从缓存里面去读取内容。而没有去服务端加载新的script.js文件。
@@ -45,6 +47,18 @@ http.createServer(function (request, response) {
     //     这样就可以达到一个更新缓存的目的。
 
     //     这是目前业界刷新浏览器缓存的通用的方案。
+
+
+    // 5. no-cache
+    //  使用no-cache的时候,虽然我们设置了Cache-Control，但是我们下一次发送请求的时候，还是要经过服务器验证，
+    //  不然的话，它不能直接使用缓存。
+    //  在实际代码测试中，我们可以看到，我们首先设置了Cache-Control，它的缓存时间特别长，但是我们的script.js这个请求还是去访问了服务器，并没有从memory cache中读取。
+    //  这就是我们设置了 no-cache的操作。
+
+    //  下一次我们刷新，再去请求这个资源，发现script.js并没有从缓存中去读，而是向服务器那边发送了请求，并且，请求头中多了两个头：
+    //  If-Modified-Since: 123 和 If -None - Match: 777
+    //  If-Modified-Since是我们上次返回响应头中的 Last-Modified
+    //  If -None - Match是我们上次返回响应头中的 Etag
 
 
   }
