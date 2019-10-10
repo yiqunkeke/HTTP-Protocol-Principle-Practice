@@ -1,0 +1,77 @@
+. 什么是数据协商？
+    就是客户端向服务端发送请求的时候，客户端会声明它希望拿到的数据格式以及相关的限制都是怎么样的。
+    然后服务端会依据请求中声明的数据格式，做出判断，返回不同样式的数据给客户端。
+
+. 分类
+    (1)请求----Accept
+        通过Accept来声明客户端想要什么样的数据返回
+        . Accept
+            用来指定想要返回的数据类型
+            数据类型会根据mimeType的声明来进行限制，告诉服务端它想要什么样的数据类型。
+
+        . Accept-Encoding
+            代表数据以怎样的编码方式进行传输，
+            主要用来限制服务端如何进行数据压缩(gzip,deflate,br)
+
+        . Accept-Language
+            在全世界范围来讲，有非常多的不同的语言。
+            不同的地方访问同一个服务，可能希望返回的语言也是不同的，比如国内我们希望返回中文，美国希望返回英文。
+
+        . User-Agent
+            用来表示浏览器和系统相关信息。
+            移动端的浏览器与pc端的浏览器，它们的User-Agent是不一样的。
+            我们可以根据User-Agent来判断，我们希望返回的是PC端的还是移动端的页面。
+            所以它也是一个非常重要的头
+
+    (2)返回----Content
+        . Content-Type---对应请求中的Accept   
+            Accept中可以接收好几种不同的数据格式，Content-Type会选择一种作为它真正返回的数据格式进行返回
+            那么在返回的时候要声明Content-Type,
+            因为客户端要根据Content-Type来判断对数据做怎样的展示。
+
+        . Content-Encoding ----对应Accept-Encoding
+            服务端到底是用了哪种方式压缩了数据，就会通过Content-Type来声明。
+
+        . Content-Language ----对应Accept-Language
+            声明返回了哪种语言的数据
+
+        服务端返回肯定就没有User-Agent了，因为User-Agent是客户端告诉服务端自己处于哪种浏览器的一个声明。 
+        服务端没必要告诉浏览器它处于哪种环境，它只要把客户端想要的数据返回给客户端就可以了
+
+        强调：
+            虽然在请求中可以通过Accept头来声明希望返回的数据格式，
+            但是服务端不一定会按照声明中的格式来进行返回。
+
+            (1)请求报文
+                GET / HTTP/1.1    
+                Host: localhost:8888   
+                Connection: keep-alive     // TCP长连接
+                Pragma: no-cache
+                Cache-Control: no-cache    // 缓存需要验证
+                Upgrade-Insecure-Requests: 1 
+                User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36
+                Sec-Fetch-Mode: navigate
+                Sec-Fetch-User: ?1
+                Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3   // Accept是浏览器自己加的，我们不能可以在发送ajax请求时自定义
+                Sec-Fetch-Site: none
+                Accept-Encoding: gzip, deflate, br   // 希望返回的数据以什么方式进行压缩
+                Accept-Language: zh-CN,zh;q=0.9,en;q=0.8   // 希望返回什么语言，q表示权重，数值越大，权重越高。这里表示更希望返回中文
+            
+            (2)返回
+                HTTP/1.1 200 OK
+                Content-Type: text/html  // 返回的数据格式参照mine-type，去了解
+                Content-Encoding: gzip  // 了解下数据压缩
+                Date: Thu, 10 Oct 2019 01:34:03 GMT
+                Connection: keep-alive
+                Transfer-Encoding: chunked
+
+. 最后我们来讲下发送请求中的Content-Type （重点！！！）
+    有时候我们会在请求中携带一些数据，发送给服务端。
+    此时我们要声明这部分数据的格式，因为如果不声明，我们在服务端就不知道该如何获取这部分数据。
+
+    见code/accept/test.html注释
+
+
+
+
+

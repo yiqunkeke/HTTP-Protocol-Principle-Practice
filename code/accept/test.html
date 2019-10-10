@@ -7,7 +7,41 @@
   <title>Document</title>
 </head>
 <body>
-  <form action="/form" id="form" enctype="application/x-www-form-urlencoded">
+  <!-- 1. 点击提交，
+    可以看到请求方式为 POST
+    并且请求头中Content-Type: application/x-www-form-urlencoded
+    最下方的 Form Data：  name=lijingke&password=123456&file=
+    与GET方式中拼在url后面的querystring一样，只不过它是放在body里面进行传输。  
+  -->
+  <!-- 服务端在接收到请求后，根据请求头中的Content-Type，读取body中的数据进行操作 -->
+  <form action="/form" method="POST" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="name">
+    <input type="password" name="password">
+    <input type="file" name="file">
+    <input type="submit">
+  </form>
+
+  <!-- 2.multipart/form-data 
+    multipart代表这个请求有多个部分，它为什么要这么做呢？
+    因为有时候我们通过表单上传文件，它必须要把文件部分单独拆出来，因为文件不能做为字符串进行传输。
+    它要做为二进制数据进行传输。
+    所以我们不能使用上面讲的拼接字符串的方式传输。文件传输不过去。
+    这时候，我们就要使用浏览器为我们提供的multipart/form-data进行传输。
+  -->
+  <!-- 此时Request Headers里面的Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryf0WiLHXlYBhGl1Lr
+    这个boundary用来分割我们提交表单中的每一部分，
+    并且每一部分又可以有自己的Content-Type
+  -->
+  <form action="/form" method="POST" enctype="multipart/form-data">
+    <input type="text" name="name">
+    <input type="password" name="password">
+    <input type="file" name="file">
+    <input type="submit">
+  </form>
+
+
+  <!-- 3.使用fetch发送ajax请求，来显示form-data -->
+  <form action="/form" id="form" enctype="multipart/form-data">
     <input type="text" name="name">
     <input type="password" name="password">
     <input type="file" name="file">
