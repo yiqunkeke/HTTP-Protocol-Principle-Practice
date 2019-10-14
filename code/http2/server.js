@@ -10,7 +10,8 @@ http.createServer(function (request, response) {
     response.writeHead(200, {
       'Content-Type': 'text/html',
       'Connection': 'keep-alive',
-      'Link': '</test.jpg>; as=image; rel=preload'
+       // http2想要推送的内容，放在Link头中
+      'Link': '</test.jpg>; as=image; rel=preload' // 这里图片路径一定要写绝对路径。
     })
     response.end(html)
   } else {

@@ -1,0 +1,5 @@
+HTTP2 
+    . 优势
+      信道复用
+      分帧传输
+      server push

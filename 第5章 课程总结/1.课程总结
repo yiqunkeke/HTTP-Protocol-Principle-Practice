@@ -1,0 +1,26 @@
+应该学到的内容
+    . HTTP原理 
+        如何去发送一个http请求？以及它的数据是怎么返回的？
+        TCP 连接 --> 三次握手
+        HTTPS
+        长连接
+        信道复用
+        分帧传输
+
+    . HTTP技术点
+        缓存
+        缓存验证Last-Modified
+        CSP
+        CORS
+        cookie和session
+
+    . Nginx实践、面向未来的HTTP
+
+        为什么HTTP不安全
+        HTTP2 vs HTTP1.1
+
+这些知识真的非常的基础，同时也非常重要，希望大家能够真正巩固到自己的脑子里面。
+将来成为web开发界的大牛。        
+
+
+
